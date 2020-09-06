@@ -1,0 +1,68 @@
+﻿<Page
+    x:Class="SEdgeBrowser.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SEdgeBrowser"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <AppBarButton x:Name="BackButton" x:Uid="/Resources/Back" Grid.Column="0" Icon="Back" 
+                          Style="{ThemeResource AppBarButtonRevealStyle}"
+                          Click="BackButton_Click" />
+            <AppBarButton x:Name="ForwardButton" x:Uid="/Resources/Forward" Grid.Column="1" Icon="Forward" 
+                          Style="{ThemeResource AppBarButtonRevealStyle}"
+                          Click="ForwardButton_Click" />
+            <AppBarButton x:Name="RefreshButton" x:Uid="/Resources/Refresh" Grid.Column="2" Icon="Refresh" 
+                          Style="{ThemeResource AppBarButtonRevealStyle}"
+                          Click="RefreshButton_Click" />
+            <AppBarButton x:Name="StopButton" x:Uid="/Resources/Stop" Grid.Column="2" Visibility="Collapsed" Icon="Cancel" 
+                          Style="{ThemeResource AppBarButtonRevealStyle}"
+                          Click="StopButton_Click" />
+            <AppBarButton x:Name="HomeButton" x:Uid="/Resources/Home" IsEnabled="False" Grid.Column="3" Icon="Home" 
+                          Style="{ThemeResource AppBarButtonRevealStyle}"
+                          Click="HomeButton_Click"/>
+            
+            <RelativePanel Grid.Column="4">
+                <TextBox x:Name="URLTextBox"
+                         RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"
+                         Text="{x:Bind URL, Mode=TwoWay}"
+                         KeyDown="URLTextBox_KeyDown" />
+                <ProgressBar x:Name="WebLoadingProgressBar" Visibility="Collapsed"
+                             RelativePanel.AlignLeftWith="URLTextBox" RelativePanel.AlignRightWith="URLTextBox" RelativePanel.AlignBottomWith="URLTextBox"/>
+            </RelativePanel>
+
+            <AppBarButton x:Name="SettingButton" x:Uid="/Resources/Setting" IsEnabled="False" Grid.Column="5" Icon="Setting" 
+                          Style="{ThemeResource AppBarButtonRevealStyle}"
+                          Click="SettingButton_Click"/>
+        </Grid>
+        
+        <WebView x:Name="MainWebView" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                 Source="https://www.naver.com"
+                 NavigationStarting="MainWebView_NavigationStarting"
+                 ContentLoading="MainWebView_ContentLoading"
+                 DOMContentLoaded="MainWebView_DOMContentLoaded"
+                 NavigationCompleted="MainWebView_NavigationCompleted"
+                 NewWindowRequested="MainWebView_NewWindowRequested"/>
+    </Grid>
+
+</Page>
