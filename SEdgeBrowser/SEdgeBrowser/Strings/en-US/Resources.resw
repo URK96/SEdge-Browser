@@ -120,16 +120,31 @@
   <data name="Back.ToolTipService.ToolTip" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="Favorite.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Favorite</value>
+  </data>
   <data name="Forward.ToolTipService.ToolTip" xml:space="preserve">
     <value>Forward</value>
+  </data>
+  <data name="History.ToolTipService.ToolTip" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="HistoryPaneTitle.Text" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="MoreOption.ToolTipService.ToolTip" xml:space="preserve">
+    <value>More Option</value>
   </data>
   <data name="Refresh.ToolTipService.ToolTip" xml:space="preserve">
     <value>Refresh</value>
   </data>
-  <data name="Setting.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Setting.Text" xml:space="preserve">
     <value>Setting</value>
   </data>
   <data name="Stop.ToolTipService.ToolTip" xml:space="preserve">
     <value>Stop</value>
+  </data>
+  <data name="URLTextBox.PlaceholderText" xml:space="preserve">
+    <value>Input URL address</value>
   </data>
 </root>

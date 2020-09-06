@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="af9db6b6-f850-41a1-99f8-136bf69cea63"
-    Publisher="CN=chlwl"
-    Version="0.1.0.0" />
+    Name="51675URK96.SEdgeBrowser"
+    Publisher="CN=558FBEBE-C1DE-4502-AFA1-2ACF1A20C1EE"
+    Version="0.2.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="af9db6b6-f850-41a1-99f8-136bf69cea63" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="ee1800f3-1c41-4f7f-92ae-47e427fdbe4a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>SEdgeBrowser</DisplayName>
+    <DisplayName>SEdge Browser</DisplayName>
     <PublisherDisplayName>URK96</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>

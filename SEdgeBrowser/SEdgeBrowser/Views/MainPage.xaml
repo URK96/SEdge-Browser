@@ -9,60 +9,85 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <SplitView x:Name="MainSplitView"
+               OpenPaneLength="400"
+               PanePlacement="Right"
+               PaneClosed="MainSplitView_PaneClosed">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+        <SplitView.Pane>
+            <Frame x:Name="RightSidePaneFrame" />
+        </SplitView.Pane>
 
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        <RelativePanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-            <AppBarButton x:Name="BackButton" x:Uid="/Resources/Back" Grid.Column="0" Icon="Back" 
-                          Style="{ThemeResource AppBarButtonRevealStyle}"
-                          Click="BackButton_Click" />
-            <AppBarButton x:Name="ForwardButton" x:Uid="/Resources/Forward" Grid.Column="1" Icon="Forward" 
-                          Style="{ThemeResource AppBarButtonRevealStyle}"
-                          Click="ForwardButton_Click" />
-            <AppBarButton x:Name="RefreshButton" x:Uid="/Resources/Refresh" Grid.Column="2" Icon="Refresh" 
-                          Style="{ThemeResource AppBarButtonRevealStyle}"
-                          Click="RefreshButton_Click" />
-            <AppBarButton x:Name="StopButton" x:Uid="/Resources/Stop" Grid.Column="2" Visibility="Collapsed" Icon="Cancel" 
-                          Style="{ThemeResource AppBarButtonRevealStyle}"
-                          Click="StopButton_Click" />
-            <AppBarButton x:Name="HomeButton" x:Uid="/Resources/Home" IsEnabled="False" Grid.Column="3" Icon="Home" 
-                          Style="{ThemeResource AppBarButtonRevealStyle}"
-                          Click="HomeButton_Click"/>
+            <Grid x:Name="MainToolbar" Grid.Row="0" Height="40"
+                  RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <AppBarButton x:Name="BackButton" x:Uid="/Resources/Back" Grid.Column="0" Icon="Back" 
+                              Style="{ThemeResource AppBarButtonRevealStyle}"
+                              Click="BackButton_Click" />
+                <AppBarButton x:Name="ForwardButton" x:Uid="/Resources/Forward" Grid.Column="1" Icon="Forward" 
+                              Style="{ThemeResource AppBarButtonRevealStyle}"
+                              Click="ForwardButton_Click" />
+                <AppBarButton x:Name="RefreshButton" x:Uid="/Resources/Refresh" Grid.Column="2" Icon="Refresh" 
+                              Style="{ThemeResource AppBarButtonRevealStyle}"
+                              Click="RefreshButton_Click" />
+                <AppBarButton x:Name="StopButton" x:Uid="/Resources/Stop" Grid.Column="2" Visibility="Collapsed" Icon="Cancel" 
+                              Style="{ThemeResource AppBarButtonRevealStyle}"
+                              Click="StopButton_Click" />
+                <AppBarButton x:Name="HomeButton" x:Uid="/Resources/Home" Grid.Column="3" Icon="Home" 
+                              Style="{ThemeResource AppBarButtonRevealStyle}"
+                              Click="HomeButton_Click"/>
             
-            <RelativePanel Grid.Column="4">
-                <TextBox x:Name="URLTextBox"
-                         RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"
-                         Text="{x:Bind URL, Mode=TwoWay}"
-                         KeyDown="URLTextBox_KeyDown" />
-                <ProgressBar x:Name="WebLoadingProgressBar" Visibility="Collapsed"
-                             RelativePanel.AlignLeftWith="URLTextBox" RelativePanel.AlignRightWith="URLTextBox" RelativePanel.AlignBottomWith="URLTextBox"/>
-            </RelativePanel>
+                <RelativePanel Grid.Column="4">
+                    <TextBox x:Name="URLTextBox" x:Uid="/Resources/URLTextBox"
+                             RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"
+                             Text="{x:Bind URL, Mode=TwoWay}"
+                             KeyDown="URLTextBox_KeyDown"
+                             GotFocus="TextBox_GotFocus"/>
+                    <ProgressBar x:Name="WebLoadingProgressBar" Visibility="Collapsed"
+                                 RelativePanel.AlignLeftWith="URLTextBox" RelativePanel.AlignRightWith="URLTextBox" RelativePanel.AlignBottomWith="URLTextBox"/>
+                </RelativePanel>
 
-            <AppBarButton x:Name="SettingButton" x:Uid="/Resources/Setting" IsEnabled="False" Grid.Column="5" Icon="Setting" 
-                          Style="{ThemeResource AppBarButtonRevealStyle}"
-                          Click="SettingButton_Click"/>
-        </Grid>
+                <AppBarButton x:Name="FavoriteButton" x:Uid="/Resources/Favorite" IsEnabled="False" Grid.Column="5" Icon="Favorite" 
+                              Style="{ThemeResource AppBarButtonRevealStyle}"
+                              Click="FavoriteButton_Click"/>
+                <AppBarButton x:Name="HistoryButton" x:Uid="/Resources/History" Grid.Column="6" Icon="Clock" 
+                              Style="{ThemeResource AppBarButtonRevealStyle}"
+                              Click="HistoryButton_Click"/>
+                <AppBarButton x:Name="MoreOptionButton" x:Uid="/Resources/MoreOption" Grid.Column="7" Icon="More" 
+                              Style="{ThemeResource AppBarButtonRevealStyle}">
+
+                    <AppBarButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem x:Uid="/Resources/Setting" Icon="Setting" Click="MenuFlyoutItem_Click"/>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+
+                </AppBarButton>
+            </Grid>
+
+            <WebView x:Name="MainWebView" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                     RelativePanel.Below="MainToolbar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"
+                     NavigationStarting="MainWebView_NavigationStarting"
+                     ContentLoading="MainWebView_ContentLoading"
+                     DOMContentLoaded="MainWebView_DOMContentLoaded"
+                     NavigationCompleted="MainWebView_NavigationCompleted"
+                     NewWindowRequested="MainWebView_NewWindowRequested"
+                     CacheMode="BitmapCache" />
         
-        <WebView x:Name="MainWebView" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                 Source="https://www.naver.com"
-                 NavigationStarting="MainWebView_NavigationStarting"
-                 ContentLoading="MainWebView_ContentLoading"
-                 DOMContentLoaded="MainWebView_DOMContentLoaded"
-                 NavigationCompleted="MainWebView_NavigationCompleted"
-                 NewWindowRequested="MainWebView_NewWindowRequested"/>
-    </Grid>
+        </RelativePanel>
+
+    </SplitView>
 
 </Page>

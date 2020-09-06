@@ -120,16 +120,31 @@
   <data name="Back.ToolTipService.ToolTip" xml:space="preserve">
     <value>뒤로</value>
   </data>
+  <data name="Favorite.ToolTipService.ToolTip" xml:space="preserve">
+    <value>즐겨찾기</value>
+  </data>
   <data name="Forward.ToolTipService.ToolTip" xml:space="preserve">
     <value>앞으로</value>
+  </data>
+  <data name="History.ToolTipService.ToolTip" xml:space="preserve">
+    <value>검색 기록</value>
+  </data>
+  <data name="HistoryPaneTitle.Text" xml:space="preserve">
+    <value>검색 기록</value>
+  </data>
+  <data name="MoreOption.ToolTipService.ToolTip" xml:space="preserve">
+    <value>기타 옵션</value>
   </data>
   <data name="Refresh.ToolTipService.ToolTip" xml:space="preserve">
     <value>새로 고침</value>
   </data>
-  <data name="Setting.ToolTipService.ToolTip" xml:space="preserve">
+  <data name="Setting.Text" xml:space="preserve">
     <value>설정</value>
   </data>
   <data name="Stop.ToolTipService.ToolTip" xml:space="preserve">
     <value>중지</value>
+  </data>
+  <data name="URLTextBox.PlaceholderText" xml:space="preserve">
+    <value>주소를 입력하세요</value>
   </data>
 </root>

@@ -4,12 +4,19 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using System.Collections.Generic;
+using SEdgeBrowser.Services;
+using SEdgeBrowser.Views;
 
 namespace SEdgeBrowser
 {
     public sealed partial class MainPage : Page
     {
         public string URL { get; set; }
+        
+        private List<(string Name, string Url)> urlHistory = new List<(string Name, string Url)>();
+
+        private bool isRefresh = false;
 
         public MainPage()
         {
@@ -17,39 +24,46 @@ namespace SEdgeBrowser
 
             //ApplicationView.GetForCurrentView().TitleBar.BackgroundColor = 
 
+            WebViewService.webView = MainWebView;
+
             string homeUrl = SettingProvider.Load<string>(SettingKeys.HomeURL);
 
-            URL = string.IsNullOrWhiteSpace(homeUrl) ? "" : homeUrl;
+            if (string.IsNullOrWhiteSpace(homeUrl))
+            {
+                homeUrl = "https://www.google.com";
 
-            //MainWebView.Navigate(new Uri(URL));
+                SettingProvider.Save(SettingKeys.HomeURL, homeUrl);
+            }
 
-            UpdateTitleStatus();
+            URL = homeUrl;
+
+            WebViewService.NavigateURL(URL);
         }
 
-        private string CheckURL(string url) => url.StartsWith("http") ? url : $"http://{url}";
-
-        private void UpdateTitleStatus()
+        private void UpdateToolbarStatus(string url)
         {
             BackButton.IsEnabled = MainWebView.CanGoBack;
             ForwardButton.IsEnabled = MainWebView.CanGoForward;
 
-            URL = MainWebView.Source.AbsoluteUri;
-
-            ApplicationView.GetForCurrentView().Title = $"{MainWebView.DocumentTitle}";
+            URL = url;
 
             Bindings.Update();
         }
 
+        private void UpdateTitle()
+        {
+            ApplicationView.GetForCurrentView().Title = $"{MainWebView.DocumentTitle}";
+        }
+
+        #region Events
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             MainWebView.GoBack();
-            UpdateTitleStatus();
         }
 
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
             MainWebView.GoForward();
-            UpdateTitleStatus();
         }
 
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
@@ -61,20 +75,15 @@ namespace SEdgeBrowser
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            //string homeUrl = SettingProvider.Load<string>(SettingKeys.HomeURL);
-
-            //MainWebView.Navigate(new Uri(CheckURL(homeUrl)));
-        }
-
-        private void SettingButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            WebViewService.NavigateURL(SettingProvider.Load<string>(SettingKeys.HomeURL));
         }
 
         private async void MainWebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
         {
             WebLoadingProgressBar.Value = 0;
             WebLoadingProgressBar.Visibility = Visibility.Visible;
+
+            MainSplitView.IsPaneOpen = false;
 
             await Task.Delay(10);
         }
@@ -84,9 +93,10 @@ namespace SEdgeBrowser
             RefreshButton.Visibility = Visibility.Collapsed;
             StopButton.Visibility = Visibility.Visible;
 
-            UpdateTitleStatus();
-
             WebLoadingProgressBar.Value = 30;
+
+            UpdateToolbarStatus(args.Uri.AbsoluteUri);
+            UpdateTitle();
 
             await Task.Delay(10);
         }
@@ -105,9 +115,17 @@ namespace SEdgeBrowser
 
             WebLoadingProgressBar.Value = 100;
 
+            if (!isRefresh)
+            {
+                HistoryDataService.AddItem(MainWebView.DocumentTitle, URL);
+            }
+
+            UpdateTitle();
+
             await Task.Delay(1000);
 
             WebLoadingProgressBar.Visibility = Visibility.Collapsed;
+            isRefresh = false;
         }
 
         private async void StopButton_Click(object sender, RoutedEventArgs e)
@@ -126,7 +144,8 @@ namespace SEdgeBrowser
             {
                 URL = (sender as TextBox).Text;
 
-                MainWebView.Navigate(new Uri(CheckURL(URL)));
+                Focus(FocusState.Programmatic);
+                WebViewService.NavigateURL(URL);
             }
         }
 
@@ -135,5 +154,66 @@ namespace SEdgeBrowser
             args.Handled = true;
             MainWebView.Navigate(args.Uri);
         }
+
+        private void FavoriteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /*private void BackButton_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            var historyFlyout = new MenuFlyout();
+            
+            for (int i = 1; (urlHistory.Count >= i) && (i <= 10); ++i)
+            {
+                var history = urlHistory[urlHistory.Count - i];
+
+                var item = new MenuFlyoutItem()
+                {
+                    Text = history.Name,
+                    Tag = i,
+                };
+                item.Click += delegate
+                {
+                    int count = (int)item.Tag;
+                    int index = urlHistory.Count - count;
+                    string url = urlHistory[index].Url;
+
+                    isHistoryClick = true;
+
+                    BackButton.ContextFlyout = null;
+                    NavigateURL(url);
+                };
+
+                historyFlyout.Items.Add(item);
+            }
+
+            //BackButton.Flyout = historyFlyout;
+            BackButton.ContextFlyout = historyFlyout;
+        }*/
+        
+
+        private void HistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainSplitView.Pane = new HistoryPage();
+            MainSplitView.IsPaneOpen = true;
+        }
+
+        private void MainSplitView_PaneClosed(SplitView sender, object args)
+        {
+            MainSplitView.Pane = null;
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            (sender as TextBox).SelectAll();
+        }
+
+        #endregion
     }
 }
