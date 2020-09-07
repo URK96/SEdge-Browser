@@ -9,7 +9,7 @@
   <Identity
     Name="51675URK96.SEdgeBrowser"
     Publisher="CN=558FBEBE-C1DE-4502-AFA1-2ACF1A20C1EE"
-    Version="0.2.0.0" />
+    Version="0.2.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="ee1800f3-1c41-4f7f-92ae-47e427fdbe4a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

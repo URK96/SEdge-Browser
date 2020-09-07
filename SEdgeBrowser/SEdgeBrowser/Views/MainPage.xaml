@@ -56,7 +56,7 @@
                              Text="{x:Bind URL, Mode=TwoWay}"
                              KeyDown="URLTextBox_KeyDown"
                              GotFocus="TextBox_GotFocus" />
-                    <ProgressBar x:Name="WebLoadingProgressBar" Visibility="Collapsed"
+                    <muxc:ProgressBar x:Name="WebLoadingProgressBar" Visibility="Collapsed" IsIndeterminate="True"
                                  RelativePanel.AlignLeftWith="URLTextBox" RelativePanel.AlignRightWith="URLTextBox" RelativePanel.AlignBottomWith="URLTextBox"/>
                 </RelativePanel>
 

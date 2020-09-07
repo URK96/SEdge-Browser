@@ -100,7 +100,6 @@ namespace SEdgeBrowser
 
         private async void MainWebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
         {
-            WebLoadingProgressBar.Value = 0;
             WebLoadingProgressBar.Visibility = Visibility.Visible;
 
             MainSplitView.IsPaneOpen = false;
@@ -113,7 +112,7 @@ namespace SEdgeBrowser
             RefreshButton.Visibility = Visibility.Collapsed;
             StopButton.Visibility = Visibility.Visible;
 
-            WebLoadingProgressBar.Value = 30;
+            WebLoadingProgressBar.Visibility = Visibility.Visible;
 
             UpdateToolbarStatus(args.Uri.AbsoluteUri);
             UpdateTitle();
@@ -123,7 +122,10 @@ namespace SEdgeBrowser
 
         private async void MainWebView_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
         {
-            WebLoadingProgressBar.Value = 70;
+            WebLoadingProgressBar.Visibility = Visibility.Collapsed;
+
+            UpdateToolbarStatus(args.Uri.AbsoluteUri);
+            UpdateTitle();
 
             await Task.Delay(10);
         }
@@ -133,13 +135,12 @@ namespace SEdgeBrowser
             RefreshButton.Visibility = Visibility.Visible;
             StopButton.Visibility = Visibility.Collapsed;
 
-            WebLoadingProgressBar.Value = 100;
-
             if (!isRefresh)
             {
                 HistoryDataService.AddItem(MainWebView.DocumentTitle, URL);
             }
 
+            UpdateToolbarStatus(args.Uri.AbsoluteUri);
             UpdateTitle();
 
             await Task.Delay(1000);
