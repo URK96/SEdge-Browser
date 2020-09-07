@@ -120,6 +120,9 @@
   <data name="Back.ToolTipService.ToolTip" xml:space="preserve">
     <value>뒤로</value>
   </data>
+  <data name="Exit.Text" xml:space="preserve">
+    <value>종료</value>
+  </data>
   <data name="Favorite.ToolTipService.ToolTip" xml:space="preserve">
     <value>즐겨찾기</value>
   </data>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SEdgeBrowser.Services;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +9,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -57,6 +60,8 @@ namespace SEdgeBrowser
 
                 // 현재 창에 프레임 넣기
                 Window.Current.Content = rootFrame;
+
+                SystemNavigationManager.GetForCurrentView().BackRequested += delegate { };
             }
 
             if (e.PrelaunchActivated == false)

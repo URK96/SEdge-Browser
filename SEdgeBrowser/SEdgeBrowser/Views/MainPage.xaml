@@ -50,11 +50,12 @@
                               Click="HomeButton_Click"/>
             
                 <RelativePanel Grid.Column="4">
+
                     <TextBox x:Name="URLTextBox" x:Uid="/Resources/URLTextBox"
                              RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"
                              Text="{x:Bind URL, Mode=TwoWay}"
                              KeyDown="URLTextBox_KeyDown"
-                             GotFocus="TextBox_GotFocus"/>
+                             GotFocus="TextBox_GotFocus" />
                     <ProgressBar x:Name="WebLoadingProgressBar" Visibility="Collapsed"
                                  RelativePanel.AlignLeftWith="URLTextBox" RelativePanel.AlignRightWith="URLTextBox" RelativePanel.AlignBottomWith="URLTextBox"/>
                 </RelativePanel>
@@ -62,22 +63,32 @@
                 <AppBarButton x:Name="FavoriteButton" x:Uid="/Resources/Favorite" IsEnabled="False" Grid.Column="5" Icon="Favorite" 
                               Style="{ThemeResource AppBarButtonRevealStyle}"
                               Click="FavoriteButton_Click"/>
-                <AppBarButton x:Name="HistoryButton" x:Uid="/Resources/History" Grid.Column="6" Icon="Clock" 
+                <AppBarButton x:Name="HistoryButton" x:Uid="/Resources/History" Grid.Column="6"
                               Style="{ThemeResource AppBarButtonRevealStyle}"
-                              Click="HistoryButton_Click"/>
+                              Click="HistoryButton_Click">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE81C;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
                 <AppBarButton x:Name="MoreOptionButton" x:Uid="/Resources/MoreOption" Grid.Column="7" Icon="More" 
                               Style="{ThemeResource AppBarButtonRevealStyle}">
 
                     <AppBarButton.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem x:Uid="/Resources/Setting" Icon="Setting" Click="MenuFlyoutItem_Click"/>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem x:Uid="/Resources/Setting" Icon="Setting" Click="MenuFlyoutItem_Click" Tag="Setting"/>
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem x:Uid="/Resources/Exit" Click="MenuFlyoutItem_Click" Tag="Exit">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7E8;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
-
+                    
                 </AppBarButton>
             </Grid>
 
-            <WebView x:Name="MainWebView" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+            <WebView x:Name="MainWebView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                      RelativePanel.Below="MainToolbar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"
                      NavigationStarting="MainWebView_NavigationStarting"
                      ContentLoading="MainWebView_ContentLoading"

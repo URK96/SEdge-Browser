@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Input;
 using System.Collections.Generic;
 using SEdgeBrowser.Services;
 using SEdgeBrowser.Views;
+using Windows.UI.Core;
 
 namespace SEdgeBrowser
 {
@@ -23,6 +24,8 @@ namespace SEdgeBrowser
             InitializeComponent();
 
             //ApplicationView.GetForCurrentView().TitleBar.BackgroundColor = 
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
 
             WebViewService.webView = MainWebView;
 
@@ -55,7 +58,24 @@ namespace SEdgeBrowser
             ApplicationView.GetForCurrentView().Title = $"{MainWebView.DocumentTitle}";
         }
 
+
         #region Events
+
+
+        private void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
+
+            if (MainWebView.CanGoBack)
+            {
+                MainWebView.GoBack();
+            }
+            else
+            {
+                Application.Current.Exit();
+            }
+        }
+
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             MainWebView.GoBack();
@@ -162,7 +182,16 @@ namespace SEdgeBrowser
 
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
+            var item = (sender as MenuFlyoutItem);
 
+            switch (item.Tag as string)
+            {
+                case "Setting":
+                    break;
+                case "Exit":
+                    Application.Current.Exit();
+                    break;
+            }
         }
 
         /*private void BackButton_RightTapped(object sender, RightTappedRoutedEventArgs e)
