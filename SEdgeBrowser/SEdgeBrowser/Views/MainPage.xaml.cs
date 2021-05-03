@@ -29,13 +29,13 @@ namespace SEdgeBrowser
 
             WebViewService.webView = MainWebView;
 
-            string homeUrl = SettingProvider.Load<string>(SettingKeys.HomeURL);
+            string homeUrl = SettingProvider.Load<string>(SettingKeys.HomepageURL);
 
             if (string.IsNullOrWhiteSpace(homeUrl))
             {
                 homeUrl = "https://www.google.com";
 
-                SettingProvider.Save(SettingKeys.HomeURL, homeUrl);
+                SettingProvider.Save(SettingKeys.HomepageURL, homeUrl);
             }
 
             URL = homeUrl;
@@ -95,7 +95,7 @@ namespace SEdgeBrowser
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            WebViewService.NavigateURL(SettingProvider.Load<string>(SettingKeys.HomeURL));
+            WebViewService.NavigateURL(SettingProvider.Load<string>(SettingKeys.HomepageURL));
         }
 
         private async void MainWebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
@@ -188,6 +188,8 @@ namespace SEdgeBrowser
             switch (item.Tag as string)
             {
                 case "Setting":
+                    MainSplitView.Pane = new SettingPage();
+                    MainSplitView.IsPaneOpen = true;
                     break;
                 case "Exit":
                     Application.Current.Exit();

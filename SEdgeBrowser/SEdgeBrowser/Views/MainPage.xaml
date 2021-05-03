@@ -57,7 +57,7 @@
                              KeyDown="URLTextBox_KeyDown"
                              GotFocus="TextBox_GotFocus" />
                     <muxc:ProgressBar x:Name="WebLoadingProgressBar" Visibility="Collapsed" IsIndeterminate="True"
-                                 RelativePanel.AlignLeftWith="URLTextBox" RelativePanel.AlignRightWith="URLTextBox" RelativePanel.AlignBottomWith="URLTextBox"/>
+                                      RelativePanel.AlignLeftWith="URLTextBox" RelativePanel.AlignRightWith="URLTextBox" RelativePanel.AlignBottomWith="URLTextBox"/>
                 </RelativePanel>
 
                 <AppBarButton x:Name="FavoriteButton" x:Uid="/Resources/Favorite" IsEnabled="False" Grid.Column="5" Icon="Favorite" 

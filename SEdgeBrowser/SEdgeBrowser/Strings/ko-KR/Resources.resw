@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApplyButton.Content" xml:space="preserve">
+    <value>적용</value>
+  </data>
   <data name="Back.ToolTipService.ToolTip" xml:space="preserve">
     <value>뒤로</value>
   </data>
@@ -143,6 +146,12 @@
   </data>
   <data name="Setting.Text" xml:space="preserve">
     <value>설정</value>
+  </data>
+  <data name="SettingPaneTitle.Text" xml:space="preserve">
+    <value>설정</value>
+  </data>
+  <data name="Setting_HomepageURL.Text" xml:space="preserve">
+    <value>홈페이지</value>
   </data>
   <data name="Stop.ToolTipService.ToolTip" xml:space="preserve">
     <value>중지</value>

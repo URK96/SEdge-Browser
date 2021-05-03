@@ -8,7 +8,7 @@ namespace SEdgeBrowser
 {
     internal static class SettingKeys
     {
-        internal static readonly string HomeURL = "Basic_HomeURL";
+        internal static readonly string HomepageURL = "Basic_HomepageURL";
         internal static readonly string StartPage = "Basic_StartPage";
     }
 }
