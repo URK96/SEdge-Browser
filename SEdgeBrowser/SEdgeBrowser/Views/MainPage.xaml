@@ -134,19 +134,16 @@
                 </AppBarButton>
             </Grid>
 
-            <WebView x:Name="MainWebView"
-                     HorizontalAlignment="Stretch"
-                     VerticalAlignment="Stretch"
-                     CacheMode="BitmapCache"
-                     ContentLoading="MainWebView_ContentLoading"
-                     DOMContentLoaded="MainWebView_DOMContentLoaded"
-                     NavigationCompleted="MainWebView_NavigationCompleted"
-                     NavigationStarting="MainWebView_NavigationStarting"
-                     NewWindowRequested="MainWebView_NewWindowRequested"
-                     RelativePanel.AlignBottomWithPanel="True"
-                     RelativePanel.AlignLeftWithPanel="True"
-                     RelativePanel.AlignRightWithPanel="True"
-                     RelativePanel.Below="MainToolbar" />
+            <muxc:WebView2 x:Name="MainWebView"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"
+                           CacheMode="BitmapCache"
+                           NavigationCompleted="MainWebView_NavigationCompleted"
+                           NavigationStarting="MainWebView_NavigationStarting"
+                           RelativePanel.AlignBottomWithPanel="True"
+                           RelativePanel.AlignLeftWithPanel="True"
+                           RelativePanel.AlignRightWithPanel="True"
+                           RelativePanel.Below="MainToolbar" />
         </RelativePanel>
     </SplitView>
 </Page>

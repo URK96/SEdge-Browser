@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml.Controls;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +12,13 @@ namespace SEdgeBrowser.Services
 {
     public static class WebViewService
     {
-        public static WebView webView;
+        public static WebView2 webView;
 
         private static string CheckURL(string url) => url.StartsWith("http") ? url : $"http://{url}";
 
         public static void NavigateURL(string url)
         {
-            webView.Navigate(new Uri(CheckURL(url)));
+            webView.CoreWebView2.Navigate(CheckURL(url));
         }
     }
 }

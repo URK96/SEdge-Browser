@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using SEdgeBrowser.Services;
 using SEdgeBrowser.Views;
 using Windows.UI.Core;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.Web.WebView2.Core;
 
 namespace SEdgeBrowser
 {
@@ -22,8 +24,6 @@ namespace SEdgeBrowser
         public MainPage()
         {
             InitializeComponent();
-
-            //ApplicationView.GetForCurrentView().TitleBar.BackgroundColor = 
 
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
 
@@ -40,7 +40,7 @@ namespace SEdgeBrowser
 
             URL = homeUrl;
 
-            WebViewService.NavigateURL(URL);
+            MainWebView.Source = new Uri(URL);
         }
 
         private void UpdateToolbarStatus(string url)
@@ -55,7 +55,7 @@ namespace SEdgeBrowser
 
         private void UpdateTitle()
         {
-            ApplicationView.GetForCurrentView().Title = $"{MainWebView.DocumentTitle}";
+            ApplicationView.GetForCurrentView().Title = $"{MainWebView.CoreWebView2.DocumentTitle}";
         }
 
 
@@ -90,7 +90,7 @@ namespace SEdgeBrowser
         {
             await Task.Delay(10);
 
-            MainWebView.Refresh();
+            MainWebView.Reload();
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
@@ -98,49 +98,28 @@ namespace SEdgeBrowser
             WebViewService.NavigateURL(SettingProvider.Load<string>(SettingKeys.HomepageURL));
         }
 
-        private async void MainWebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+        private async void MainWebView_NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
         {
             WebLoadingProgressBar.Visibility = Visibility.Visible;
+            RefreshButton.Visibility = Visibility.Collapsed;
+            StopButton.Visibility = Visibility.Visible;
 
             MainSplitView.IsPaneOpen = false;
 
             await Task.Delay(10);
         }
 
-        private async void MainWebView_ContentLoading(WebView sender, WebViewContentLoadingEventArgs args)
-        {
-            RefreshButton.Visibility = Visibility.Collapsed;
-            StopButton.Visibility = Visibility.Visible;
-
-            WebLoadingProgressBar.Visibility = Visibility.Visible;
-
-            UpdateToolbarStatus(args.Uri.AbsoluteUri);
-            UpdateTitle();
-
-            await Task.Delay(10);
-        }
-
-        private async void MainWebView_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
-        {
-            WebLoadingProgressBar.Visibility = Visibility.Collapsed;
-
-            UpdateToolbarStatus(args.Uri.AbsoluteUri);
-            UpdateTitle();
-
-            await Task.Delay(10);
-        }
-
-        private async void MainWebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        private async void MainWebView_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             RefreshButton.Visibility = Visibility.Visible;
             StopButton.Visibility = Visibility.Collapsed;
 
             if (!isRefresh)
             {
-                HistoryDataService.AddItem(MainWebView.DocumentTitle, URL);
+                HistoryDataService.AddItem(MainWebView.CoreWebView2.DocumentTitle, URL);
             }
 
-            UpdateToolbarStatus(args.Uri.AbsoluteUri);
+            UpdateToolbarStatus(sender.Source.AbsoluteUri);
             UpdateTitle();
 
             await Task.Delay(1000);
@@ -153,7 +132,7 @@ namespace SEdgeBrowser
         {
             await Task.Delay(10);
 
-            MainWebView.Stop();
+            MainWebView.CoreWebView2.Stop();
 
             RefreshButton.Visibility = Visibility.Visible;
             StopButton.Visibility = Visibility.Collapsed;
@@ -168,12 +147,6 @@ namespace SEdgeBrowser
                 Focus(FocusState.Programmatic);
                 WebViewService.NavigateURL(URL);
             }
-        }
-
-        private void MainWebView_NewWindowRequested(WebView sender, WebViewNewWindowRequestedEventArgs args)
-        {
-            args.Handled = true;
-            MainWebView.Navigate(args.Uri);
         }
 
         private void FavoriteButton_Click(object sender, RoutedEventArgs e)
