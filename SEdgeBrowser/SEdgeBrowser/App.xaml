@@ -10,6 +10,12 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"
                                        ControlsResourcesVersion="Version1" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="SEdgeAppBarButtonStyle"
+                   BasedOn="{StaticResource AppBarButtonRevealStyle}"
+                   TargetType="AppBarButton">
+                <Setter Property="IsCompact" Value="True" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 
