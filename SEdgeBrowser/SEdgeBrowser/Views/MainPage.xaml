@@ -1,27 +1,28 @@
-﻿<Page
-    x:Class="SEdgeBrowser.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SEdgeBrowser"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+﻿<Page x:Class="SEdgeBrowser.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:SEdgeBrowser"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
     <SplitView x:Name="MainSplitView"
                OpenPaneLength="400"
-               PanePlacement="Right"
-               PaneClosed="MainSplitView_PaneClosed">
-
+               PaneClosed="MainSplitView_PaneClosed"
+               PanePlacement="Right">
         <SplitView.Pane>
             <Frame x:Name="RightSidePaneFrame" />
         </SplitView.Pane>
 
-        <RelativePanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
-            <Grid x:Name="MainToolbar" Grid.Row="0" Height="40"
-                  RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+        <RelativePanel HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch">
+            <Grid x:Name="MainToolbar"
+                  Grid.Row="0"
+                  Height="40"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  RelativePanel.AlignTopWithPanel="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -33,72 +34,119 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <AppBarButton x:Name="BackButton" x:Uid="/Resources/Back" Grid.Column="0" Icon="Back" 
-                              Style="{ThemeResource AppBarButtonRevealStyle}"
-                              Click="BackButton_Click" />
-                <AppBarButton x:Name="ForwardButton" x:Uid="/Resources/Forward" Grid.Column="1" Icon="Forward" 
-                              Style="{ThemeResource AppBarButtonRevealStyle}"
-                              Click="ForwardButton_Click" />
-                <AppBarButton x:Name="RefreshButton" x:Uid="/Resources/Refresh" Grid.Column="2" Icon="Refresh" 
-                              Style="{ThemeResource AppBarButtonRevealStyle}"
-                              Click="RefreshButton_Click" />
-                <AppBarButton x:Name="StopButton" x:Uid="/Resources/Stop" Grid.Column="2" Visibility="Collapsed" Icon="Cancel" 
-                              Style="{ThemeResource AppBarButtonRevealStyle}"
-                              Click="StopButton_Click" />
-                <AppBarButton x:Name="HomeButton" x:Uid="/Resources/Home" Grid.Column="3" Icon="Home" 
-                              Style="{ThemeResource AppBarButtonRevealStyle}"
-                              Click="HomeButton_Click"/>
-            
-                <RelativePanel Grid.Column="4">
+                <AppBarButton x:Name="BackButton"
+                              x:Uid="/Resources/Back"
+                              Grid.Column="0"
+                              Click="BackButton_Click"
+                              Icon="Back"
+                              Style="{ThemeResource AppBarButtonRevealStyle}" />
 
-                    <TextBox x:Name="URLTextBox" x:Uid="/Resources/URLTextBox"
-                             RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"
-                             Text="{x:Bind URL, Mode=TwoWay}"
+                <AppBarButton x:Name="ForwardButton"
+                              x:Uid="/Resources/Forward"
+                              Grid.Column="1"
+                              Click="ForwardButton_Click"
+                              Icon="Forward"
+                              Style="{ThemeResource AppBarButtonRevealStyle}" />
+
+                <AppBarButton x:Name="RefreshButton"
+                              x:Uid="/Resources/Refresh"
+                              Grid.Column="2"
+                              Click="RefreshButton_Click"
+                              Icon="Refresh"
+                              Style="{ThemeResource AppBarButtonRevealStyle}" />
+
+                <AppBarButton x:Name="StopButton"
+                              x:Uid="/Resources/Stop"
+                              Grid.Column="2"
+                              Click="StopButton_Click"
+                              Icon="Cancel"
+                              Style="{ThemeResource AppBarButtonRevealStyle}"
+                              Visibility="Collapsed" />
+
+                <AppBarButton x:Name="HomeButton"
+                              x:Uid="/Resources/Home"
+                              Grid.Column="3"
+                              Click="HomeButton_Click"
+                              Icon="Home"
+                              Style="{ThemeResource AppBarButtonRevealStyle}" />
+
+                <RelativePanel Grid.Column="4">
+                    <TextBox x:Name="URLTextBox"
+                             x:Uid="/Resources/URLTextBox"
+                             GotFocus="TextBox_GotFocus"
                              KeyDown="URLTextBox_KeyDown"
-                             GotFocus="TextBox_GotFocus" />
-                    <muxc:ProgressBar x:Name="WebLoadingProgressBar" Visibility="Collapsed" IsIndeterminate="True"
-                                      RelativePanel.AlignLeftWith="URLTextBox" RelativePanel.AlignRightWith="URLTextBox" RelativePanel.AlignBottomWith="URLTextBox"/>
+                             RelativePanel.AlignLeftWithPanel="True"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.AlignVerticalCenterWithPanel="True"
+                             Text="{x:Bind URL, Mode=TwoWay}" />
+
+                    <muxc:ProgressBar x:Name="WebLoadingProgressBar"
+                                      IsIndeterminate="True"
+                                      RelativePanel.AlignBottomWith="URLTextBox"
+                                      RelativePanel.AlignLeftWith="URLTextBox"
+                                      RelativePanel.AlignRightWith="URLTextBox"
+                                      Visibility="Collapsed" />
                 </RelativePanel>
 
-                <AppBarButton x:Name="FavoriteButton" x:Uid="/Resources/Favorite" IsEnabled="False" Grid.Column="5" Icon="Favorite" 
-                              Style="{ThemeResource AppBarButtonRevealStyle}"
-                              Click="FavoriteButton_Click"/>
-                <AppBarButton x:Name="HistoryButton" x:Uid="/Resources/History" Grid.Column="6"
-                              Style="{ThemeResource AppBarButtonRevealStyle}"
-                              Click="HistoryButton_Click">
+                <AppBarButton x:Name="FavoriteButton"
+                              x:Uid="/Resources/Favorite"
+                              Grid.Column="5"
+                              Click="FavoriteButton_Click"
+                              Icon="Favorite"
+                              IsEnabled="False"
+                              Style="{ThemeResource AppBarButtonRevealStyle}" />
+
+                <AppBarButton x:Name="HistoryButton"
+                              x:Uid="/Resources/History"
+                              Grid.Column="6"
+                              Click="HistoryButton_Click"
+                              Style="{ThemeResource AppBarButtonRevealStyle}">
                     <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE81C;" />
+                        <FontIcon FontFamily="Segoe MDL2 Assets"
+                                  Glyph="&#xE81C;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton x:Name="MoreOptionButton" x:Uid="/Resources/MoreOption" Grid.Column="7" Icon="More" 
-                              Style="{ThemeResource AppBarButtonRevealStyle}">
 
+                <AppBarButton x:Name="MoreOptionButton"
+                              x:Uid="/Resources/MoreOption"
+                              Grid.Column="7"
+                              Icon="More"
+                              Style="{ThemeResource AppBarButtonRevealStyle}">
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem x:Uid="/Resources/Setting" Icon="Setting" Click="MenuFlyoutItem_Click" Tag="Setting"/>
+                            <MenuFlyoutItem x:Uid="/Resources/Setting"
+                                            Click="MenuFlyoutItem_Click"
+                                            Icon="Setting"
+                                            Tag="Setting" />
+
                             <MenuFlyoutSeparator />
-                            <MenuFlyoutItem x:Uid="/Resources/Exit" Click="MenuFlyoutItem_Click" Tag="Exit">
+
+                            <MenuFlyoutItem x:Uid="/Resources/Exit"
+                                            Click="MenuFlyoutItem_Click"
+                                            Tag="Exit">
                                 <MenuFlyoutItem.Icon>
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7E8;" />
+                                    <FontIcon FontFamily="Segoe MDL2 Assets"
+                                              Glyph="&#xE7E8;" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
-                    
                 </AppBarButton>
             </Grid>
 
-            <WebView x:Name="MainWebView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                     RelativePanel.Below="MainToolbar" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True"
-                     NavigationStarting="MainWebView_NavigationStarting"
+            <WebView x:Name="MainWebView"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Stretch"
+                     CacheMode="BitmapCache"
                      ContentLoading="MainWebView_ContentLoading"
                      DOMContentLoaded="MainWebView_DOMContentLoaded"
                      NavigationCompleted="MainWebView_NavigationCompleted"
+                     NavigationStarting="MainWebView_NavigationStarting"
                      NewWindowRequested="MainWebView_NewWindowRequested"
-                     CacheMode="BitmapCache" />
-        
+                     RelativePanel.AlignBottomWithPanel="True"
+                     RelativePanel.AlignLeftWithPanel="True"
+                     RelativePanel.AlignRightWithPanel="True"
+                     RelativePanel.Below="MainToolbar" />
         </RelativePanel>
-
     </SplitView>
-
 </Page>
