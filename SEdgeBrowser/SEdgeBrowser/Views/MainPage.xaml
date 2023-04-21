@@ -15,14 +15,15 @@
             <Frame x:Name="RightSidePaneFrame" />
         </SplitView.Pane>
 
-        <RelativePanel HorizontalAlignment="Stretch"
-                       VerticalAlignment="Stretch">
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="41" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
             <Grid x:Name="MainToolbar"
-                  Grid.Row="0"
-                  Height="40"
-                  RelativePanel.AlignLeftWithPanel="True"
-                  RelativePanel.AlignRightWithPanel="True"
-                  RelativePanel.AlignTopWithPanel="True">
+                  Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -39,28 +40,28 @@
                               Grid.Column="0"
                               Click="BackButton_Click"
                               Icon="Back"
-                              Style="{ThemeResource AppBarButtonRevealStyle}" />
+                              Style="{StaticResource SEdgeAppBarButtonStyle}" />
 
                 <AppBarButton x:Name="ForwardButton"
                               x:Uid="/Resources/Forward"
                               Grid.Column="1"
                               Click="ForwardButton_Click"
                               Icon="Forward"
-                              Style="{ThemeResource AppBarButtonRevealStyle}" />
+                              Style="{StaticResource SEdgeAppBarButtonStyle}" />
 
                 <AppBarButton x:Name="RefreshButton"
                               x:Uid="/Resources/Refresh"
                               Grid.Column="2"
                               Click="RefreshButton_Click"
                               Icon="Refresh"
-                              Style="{ThemeResource AppBarButtonRevealStyle}" />
+                              Style="{StaticResource SEdgeAppBarButtonStyle}" />
 
                 <AppBarButton x:Name="StopButton"
                               x:Uid="/Resources/Stop"
                               Grid.Column="2"
                               Click="StopButton_Click"
                               Icon="Cancel"
-                              Style="{ThemeResource AppBarButtonRevealStyle}"
+                              Style="{StaticResource SEdgeAppBarButtonStyle}"
                               Visibility="Collapsed" />
 
                 <AppBarButton x:Name="HomeButton"
@@ -68,7 +69,7 @@
                               Grid.Column="3"
                               Click="HomeButton_Click"
                               Icon="Home"
-                              Style="{ThemeResource AppBarButtonRevealStyle}" />
+                              Style="{StaticResource SEdgeAppBarButtonStyle}" />
 
                 <RelativePanel Grid.Column="4">
                     <TextBox x:Name="URLTextBox"
@@ -80,12 +81,12 @@
                              RelativePanel.AlignVerticalCenterWithPanel="True"
                              Text="{x:Bind URL, Mode=TwoWay}" />
 
-                    <muxc:ProgressBar x:Name="WebLoadingProgressBar"
-                                      IsIndeterminate="True"
-                                      RelativePanel.AlignBottomWith="URLTextBox"
-                                      RelativePanel.AlignLeftWith="URLTextBox"
-                                      RelativePanel.AlignRightWith="URLTextBox"
-                                      Visibility="Collapsed" />
+                    <ProgressBar x:Name="WebLoadingProgressBar"
+                                 IsIndeterminate="True"
+                                 RelativePanel.AlignLeftWith="URLTextBox"
+                                 RelativePanel.AlignRightWith="URLTextBox"
+                                 RelativePanel.AlignTopWith="URLTextBox"
+                                 Visibility="Collapsed" />
                 </RelativePanel>
 
                 <AppBarButton x:Name="FavoriteButton"
@@ -94,13 +95,13 @@
                               Click="FavoriteButton_Click"
                               Icon="Favorite"
                               IsEnabled="False"
-                              Style="{ThemeResource AppBarButtonRevealStyle}" />
+                              Style="{StaticResource SEdgeAppBarButtonStyle}" />
 
                 <AppBarButton x:Name="HistoryButton"
                               x:Uid="/Resources/History"
                               Grid.Column="6"
                               Click="HistoryButton_Click"
-                              Style="{ThemeResource AppBarButtonRevealStyle}">
+                              Style="{StaticResource SEdgeAppBarButtonStyle}">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets"
                                   Glyph="&#xE81C;" />
@@ -111,7 +112,7 @@
                               x:Uid="/Resources/MoreOption"
                               Grid.Column="7"
                               Icon="More"
-                              Style="{ThemeResource AppBarButtonRevealStyle}">
+                              Style="{StaticResource SEdgeAppBarButtonStyle}">
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem x:Uid="/Resources/Setting"
@@ -135,6 +136,7 @@
             </Grid>
 
             <muxc:WebView2 x:Name="MainWebView"
+                           Grid.Row="1"
                            HorizontalAlignment="Stretch"
                            VerticalAlignment="Stretch"
                            CacheMode="BitmapCache"
@@ -144,6 +146,6 @@
                            RelativePanel.AlignLeftWithPanel="True"
                            RelativePanel.AlignRightWithPanel="True"
                            RelativePanel.Below="MainToolbar" />
-        </RelativePanel>
+        </Grid>
     </SplitView>
 </Page>
