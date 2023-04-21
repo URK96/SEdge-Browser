@@ -114,13 +114,13 @@ namespace SEdgeBrowser
             RefreshButton.Visibility = Visibility.Visible;
             StopButton.Visibility = Visibility.Collapsed;
 
+            UpdateToolbarStatus(sender.Source.AbsoluteUri);
+            UpdateTitle();
+
             if (!isRefresh)
             {
                 HistoryDataService.AddItem(MainWebView.CoreWebView2.DocumentTitle, URL);
             }
-
-            UpdateToolbarStatus(sender.Source.AbsoluteUri);
-            UpdateTitle();
 
             await Task.Delay(1000);
 
