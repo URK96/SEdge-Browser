@@ -15,7 +15,7 @@ namespace SEdgeBrowser.Helper
 
         public static string GetFavicon(string domain)
         {
-            return $"https://api.faviconkit.com/{domain}/144";
+            return $"https://icon.horse/icon/{domain}/144";
         }
     }
 }
